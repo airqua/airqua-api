@@ -58,10 +58,19 @@ export interface Sensor {
   coordinates: Coordinates;
   address: Address;
   /** The sensor has transmitted data in at least one of the last three polling cycles */
-  active?: boolean;
+  active: boolean;
+  last_reading: SensorReading | null;
 }
 
 export interface SensorReading {
+  /** @format uuid */
+  id: string;
+  values?: SensorReadingValue[];
+  /** @format date-time */
+  created_at: string;
+}
+
+export interface SensorReadingValue {
   /** @format uuid */
   id: string;
   metric: Metric;

@@ -68,6 +68,10 @@ export interface RecoverPost {
   email: string;
 }
 
+export interface RecoverCodePost {
+  password: string;
+}
+
 export interface Coordinates {
   /** @example 51.45641 */
   lat: number;

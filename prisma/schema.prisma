@@ -9,24 +9,21 @@ datasource db {
 }
 
 model metrics {
-  id          String     @id @db.VarChar(5)
-  name        String     @db.Text
-  description String     @db.Text
-  max         Float
-  unit        String     @db.VarChar(5)
-  readings    readings[]
+  id              String            @id @db.VarChar(5)
+  name            String            @db.Text
+  description     String            @db.Text
+  max             Float
+  unit            String            @db.VarChar(5)
+  readings_values readings_values[]
 }
 
 model readings {
-  id         Bytes    @id @default(dbgenerated("(uuid_to_bin(uuid(),1))")) @db.Binary(16)
-  sensor_id  Bytes    @db.Binary(16)
-  metric_id  String   @db.VarChar(5)
-  value      Float
-  created_at DateTime @default(now()) @db.DateTime(0)
-  metrics    metrics  @relation(fields: [metric_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "readings_metrics_id_fk")
-  sensors    sensors  @relation(fields: [sensor_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "readings_sensors_id_fk")
+  id              Bytes             @id @default(dbgenerated("(uuid_to_bin(uuid(),1))")) @db.Binary(16)
+  sensor_id       Bytes             @db.Binary(16)
+  created_at      DateTime          @default(now()) @db.DateTime(0)
+  sensors         sensors           @relation(fields: [sensor_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "readings_sensors_id_fk")
+  readings_values readings_values[]
 
-  @@index([metric_id], map: "readings_metrics_id_fk")
   @@index([sensor_id], map: "readings_sensors_id_fk")
 }
 
@@ -47,7 +44,7 @@ model sensors {
 }
 
 model sessions {
-  id          String   @id @default(dbgenerated("(random_bytes(128))")) @db.VarChar(128)
+  id          String   @id @db.VarChar(128)
   user_id     Bytes    @db.Binary(16)
   created_at  DateTime @default(now()) @db.DateTime(0)
   valid_until DateTime @default(dbgenerated("(now() + interval 14 day)")) @db.DateTime(0)
@@ -61,9 +58,37 @@ model users {
   first_name String     @db.Text
   last_name  String     @db.Text
   email      String     @db.Text
-  password   String     @db.Text
+  password   String     @db.VarChar(60)
   created_at DateTime   @default(now()) @db.DateTime(0)
   verified   Boolean    @default(false)
+  codes      codes[]
   sensors    sensors[]
   sessions   sessions[]
+}
+
+model readings_values {
+  id         Bytes    @id @default(dbgenerated("(uuid_to_bin(uuid(),1))")) @db.Binary(16)
+  reading_id Bytes    @db.Binary(16)
+  metric_id  String   @db.VarChar(5)
+  value      Float
+  metrics    metrics  @relation(fields: [metric_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "readings_values_metrics_id_fk")
+  readings   readings @relation(fields: [reading_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "readings_values_readings_id_fk")
+
+  @@index([metric_id], map: "readings_values_metrics_id_fk")
+  @@index([reading_id], map: "readings_values_readings_id_fk")
+}
+
+model codes {
+  id          String     @id @db.VarChar(32)
+  type        codes_type
+  user_id     Bytes      @db.Binary(16)
+  valid_until DateTime   @default(dbgenerated("(now() + interval 6 hour)")) @db.DateTime(0)
+  users       users      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "codes_users_id_fk")
+
+  @@index([user_id], map: "codes_users_id_fk")
+}
+
+enum codes_type {
+  verification
+  recovery
 }

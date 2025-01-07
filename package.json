@@ -19,6 +19,7 @@
     "url": "git+https://github.com/airqua/airqua-api.git"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.10.5",
     "dotenv": "^16.4.7",
     "prisma": "^6.1.0",
@@ -26,6 +27,12 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@prisma/client": "^6.1.0"
+    "@fastify/cookie": "^11.0.2",
+    "@prisma/client": "^6.1.0",
+    "@sendgrid/mail": "^8.1.4",
+    "bcrypt": "^5.1.1",
+    "dayjs": "^1.11.13",
+    "fastify": "^5.2.1",
+    "uuid": "^11.0.4"
   }
 }
