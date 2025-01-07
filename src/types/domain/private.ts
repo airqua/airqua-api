@@ -101,7 +101,7 @@ export type SensorNotOwn = {
 } & SensorGeneric;
 
 export type SensorOwn = {
-  own: false;
+  own: true;
 } & SensorGeneric & {
     visible: boolean;
     approved: boolean;
@@ -117,7 +117,7 @@ export interface SensorPost {
 export interface SensorReading {
   /** @format uuid */
   id: string;
-  values?: SensorReadingValue[];
+  values: SensorReadingValue[];
   /** @format date-time */
   created_at: string;
 }

@@ -65,7 +65,7 @@ export interface Sensor {
 export interface SensorReading {
   /** @format uuid */
   id: string;
-  values?: SensorReadingValue[];
+  values: SensorReadingValue[];
   /** @format date-time */
   created_at: string;
 }
