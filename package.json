@@ -1,0 +1,31 @@
+{
+  "name": "airqua-api",
+  "version": "1.0.0",
+  "description": "AirQua core backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "npx tsc && node -r dotenv/config dist/index.js",
+    "pull-db": "npx prisma db pull && npx prisma generate",
+    "generate-types": "node generate-types.js"
+  },
+  "author": {
+    "name": "Denis Zhmurenko",
+    "email": "hi@dyzoon.dev"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/airqua/airqua-api.git"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "dotenv": "^16.4.7",
+    "prisma": "^6.1.0",
+    "swagger-typescript-api": "^13.0.23",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.1.0"
+  }
+}

@@ -1,0 +1,69 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model metrics {
+  id          String     @id @db.VarChar(5)
+  name        String     @db.Text
+  description String     @db.Text
+  max         Float
+  unit        String     @db.VarChar(5)
+  readings    readings[]
+}
+
+model readings {
+  id         Bytes    @id @default(dbgenerated("(uuid_to_bin(uuid(),1))")) @db.Binary(16)
+  sensor_id  Bytes    @db.Binary(16)
+  metric_id  String   @db.VarChar(5)
+  value      Float
+  created_at DateTime @default(now()) @db.DateTime(0)
+  metrics    metrics  @relation(fields: [metric_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "readings_metrics_id_fk")
+  sensors    sensors  @relation(fields: [sensor_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "readings_sensors_id_fk")
+
+  @@index([metric_id], map: "readings_metrics_id_fk")
+  @@index([sensor_id], map: "readings_sensors_id_fk")
+}
+
+model sensors {
+  id         Bytes      @id @default(dbgenerated("(uuid_to_bin(uuid(),1))")) @db.Binary(16)
+  lat        Float
+  lng        Float
+  street     String     @db.Text
+  city       String     @db.Text
+  visible    Boolean    @default(true)
+  approved   Boolean    @default(false)
+  created_at DateTime   @default(now()) @db.DateTime(0)
+  created_by Bytes      @db.Binary(16)
+  readings   readings[]
+  users      users      @relation(fields: [created_by], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "sensors_users_id_fk")
+
+  @@index([created_by], map: "sensors_users_id_fk")
+}
+
+model sessions {
+  id          String   @id @default(dbgenerated("(random_bytes(128))")) @db.VarChar(128)
+  user_id     Bytes    @db.Binary(16)
+  created_at  DateTime @default(now()) @db.DateTime(0)
+  valid_until DateTime @default(dbgenerated("(now() + interval 14 day)")) @db.DateTime(0)
+  users       users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "sessions_users_id_fk")
+
+  @@index([user_id], map: "sessions_users_id_fk")
+}
+
+model users {
+  id         Bytes      @id @default(dbgenerated("(uuid_to_bin(uuid(),1))")) @db.Binary(16)
+  first_name String     @db.Text
+  last_name  String     @db.Text
+  email      String     @db.Text
+  password   String     @db.Text
+  created_at DateTime   @default(now()) @db.DateTime(0)
+  verified   Boolean    @default(false)
+  sensors    sensors[]
+  sessions   sessions[]
+}
