@@ -20,7 +20,6 @@ RUN npx prisma generate
 
 FROM node:20-alpine
 WORKDIR /app
-RUN apk add openssl1.1-compat
 COPY --from=app /app ./
 
 CMD VERSION=$(npm pkg get version | xargs) node index.js
