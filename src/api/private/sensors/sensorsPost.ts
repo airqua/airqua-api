@@ -5,6 +5,7 @@ import {Sensor, SensorPost} from "../../../types/domain/private";
 import {db} from "../../../db";
 import {ok} from "../../../utils/responses";
 import {makeSensorPrivate} from "../../../dtos/makeSensorPrivate";
+import {makeUuid} from "../../../utils/uuid";
 
 type RequestType = { Body: SensorPost };
 
@@ -14,6 +15,7 @@ export const sensorsPost: Route = (f) =>
 
         const sensor = await db.sensors.create({
             data: {
+                id: makeUuid(),
                 lat: coordinates.lat,
                 lng: coordinates.lng,
                 street: address.street,

@@ -5,9 +5,8 @@ import {db} from "../../../db";
 import {ok} from "../../../utils/responses";
 import bcrypt from 'bcrypt';
 import {sendAlreadyRegisteredEmail, sendVerifyEmail} from "../../../modules/mail";
-import {makeVerificationLink} from "../../../utils/makeVerificationLink";
-import {randomString} from "../../../utils/randomString";
 import {generateVerificationLink} from "../../../modules/generateVerificationLink";
+import {makeUuid} from "../../../utils/uuid";
 
 type RouteType = { Body: SignupPost };
 
@@ -27,10 +26,11 @@ export const authSignupPost: Route = (f) =>
 
         const user = await db.users.create({
             data: {
+                id: makeUuid(),
                 first_name,
                 last_name,
                 email,
-                password: await bcrypt.hash(req.body.password, 12),
+                password: await bcrypt.hash(password, 12),
             }
         });
 
