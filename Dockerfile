@@ -18,11 +18,10 @@ RUN npm ci --only=production
 RUN npm i -D prisma
 RUN npx prisma generate
 
-RUN apk add python3 make g++
-RUN npm rebuild bcrypt --build-from-source
-
 FROM node:20-alpine
 WORKDIR /app
 COPY --from=app /app ./
+RUN apk add python3 make g++
+RUN npm rebuild bcrypt --build-from-source
 
 CMD VERSION=$(npm pkg get version | xargs) node index.js
