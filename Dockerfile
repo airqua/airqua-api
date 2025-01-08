@@ -18,7 +18,7 @@ RUN npm ci --only=production
 RUN npm i -D prisma
 RUN npx prisma generate
 
-RUN apk add python3
+RUN apk add python3 make c++
 RUN npm rebuild bcrypt --build-from-source
 
 FROM node:20-alpine
