@@ -17,6 +17,8 @@ COPY --from=build /build/dist ./
 RUN npm ci --only=production
 RUN npm i -D prisma
 RUN npx prisma generate
+
+RUN apk add python3
 RUN npm rebuild bcrypt --build-from-source
 
 FROM node:20-alpine
