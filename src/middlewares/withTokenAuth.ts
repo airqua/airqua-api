@@ -40,7 +40,7 @@ export function withTokenAuth<
     optional?: Optional
 ): CustomRouteHandlerMethod<T> {
     return async function(req, resp) {
-        const token = (req.headers['Authorization'] as string | undefined)?.split(' ')[1];
+        const token = req.headers.authorization?.split(' ')[1];
         const user = await validateToken(token, optional);
         await routeFunc.call(this, req, resp, user);
     } as CustomRouteHandlerMethod<T>;
