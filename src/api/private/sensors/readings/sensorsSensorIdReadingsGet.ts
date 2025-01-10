@@ -14,6 +14,7 @@ export const sensorsSensorIdReadingsGet: Route = (f) =>
 
         const readings = await db.readings.findMany({
             where: { sensor_id: toBinaryUuid(sensorId) },
+            orderBy: { created_at: 'desc' },
             include: {
                 readings_values: {
                     include: {
