@@ -32,7 +32,7 @@ export const authSignupPost: Route = (f) =>
                 last_name,
                 email,
                 password: await bcrypt.hash(password, 12),
-                token: randomString(128)
+                token: randomString(64)
             }
         });
 
