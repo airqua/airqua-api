@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import {sendAlreadyRegisteredEmail, sendVerifyEmail} from "../../../modules/mail";
 import {generateVerificationLink} from "../../../modules/generateVerificationLink";
 import {makeUuid} from "../../../utils/uuid";
+import {randomString} from "../../../utils/randomString";
 
 type RouteType = { Body: SignupPost };
 
@@ -31,6 +32,7 @@ export const authSignupPost: Route = (f) =>
                 last_name,
                 email,
                 password: await bcrypt.hash(password, 12),
+                token: randomString(128)
             }
         });
 

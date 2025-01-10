@@ -5,6 +5,7 @@ import fastify from "fastify";
 import fastifyCookie, {FastifyCookieOptions} from "@fastify/cookie";
 import {env} from "./env";
 import {privateHandler} from "./api/private";
+import {publicHandler} from "./api/public";
 
 dayjs.extend(dayjsUTC);
 
@@ -19,6 +20,7 @@ f.register(fastifyCookie, {
     }
 } as FastifyCookieOptions);
 
+f.register(publicHandler, { prefix: '/public' });
 f.register(privateHandler, { prefix: '/private' });
 
 void f.listen({
