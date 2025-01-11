@@ -6,12 +6,17 @@ import {db} from "../../../db";
 import {ok} from "../../../utils/responses";
 import {makeSensorPrivate} from "../../../dtos/makeSensorPrivate";
 import {makeUuid} from "../../../utils/uuid";
+import {ForbidError} from "../../../errors/ForbidError";
 
 type RequestType = { Body: SensorPost };
 
 export const sensorsPost: Route = (f) =>
     f.post<RequestType>('/', withErrorHandler(withAuth(async (req, resp, user) => {
         const { coordinates, address } = req.body;
+
+        if(!user.verified) {
+            throw new ForbidError();
+        }
 
         const sensor = await db.sensors.create({
             data: {
