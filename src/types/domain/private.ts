@@ -72,6 +72,23 @@ export interface RecoverCodePost {
   password: string;
 }
 
+export interface PasswordPut {
+  old_password: string;
+  password: string;
+}
+
+export interface Session {
+  id: string;
+  /** @format date-time */
+  created_at: string;
+  /** @format date-time */
+  valid_until: string;
+}
+
+export interface Token {
+  token: string;
+}
+
 export interface Coordinates {
   /** @example 51.45641 */
   lat: number;

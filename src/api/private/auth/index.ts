@@ -6,6 +6,11 @@ import {authSignupPost} from "./authSignupPost";
 import {authRecoverPost} from "./authRecoverPost";
 import {authRecoverCodePost} from "./authRecoverCodePost";
 import {authVerifyCodePost} from "./authVerifyCodePost";
+import {authPasswordPut} from "./authPasswordPut";
+import {authSessionsGet} from "./authSessionsGet";
+import {authSessionsDelete} from "./authSessionsDelete";
+import {authTokenGet} from "./authTokenGet";
+import {authTokenPut} from "./authTokenPut";
 
 export const privateAuthHandler = makeRoutes((fastify) => {
     // GET /auth
@@ -28,4 +33,19 @@ export const privateAuthHandler = makeRoutes((fastify) => {
 
     // POST /auth/verify/{code}
     authVerifyCodePost(fastify);
+
+    // PUT /auth/password
+    authPasswordPut(fastify);
+
+    // GET /auth/sessions
+    authSessionsGet(fastify);
+
+    // DELETE /auth/sessions
+    authSessionsDelete(fastify);
+
+    // GET /auth/token
+    authTokenGet(fastify);
+
+    // PUT /auth/token
+    authTokenPut(fastify);
 })
