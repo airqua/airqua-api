@@ -1,13 +1,14 @@
-import {Route} from "../../../../types/routes";
-import {withErrorHandler} from "../../../../middlewares/withErrorHandler";
-import {NotFoundError} from "../../../../errors/NotFoundError";
-import {getAndValidateCode} from "../../../../modules/getAndValidateCode";
-import {db} from "../../../../db";
-import {ok} from "../../../../utils/responses";
+import {Route} from "../../../types/routes";
+import {withErrorHandler} from "../../../middlewares/withErrorHandler";
+import {getAndValidateCode} from "../../../modules/getAndValidateCode";
+import {NotFoundError} from "../../../errors/NotFoundError";
+import {db} from "../../../db";
+import {ok} from "../../../utils/responses";
+
 
 type RouteType = { Params: { code: string } };
 
-export const authVerifyCodePost: Route = (f) =>
+export const accountVerifyCodePost: Route = (f) =>
     f.post<RouteType>('/verify/:code', withErrorHandler(async (req, resp) => {
         const { code } = req.params;
 

@@ -72,9 +72,12 @@ export interface RecoverCodePost {
   password: string;
 }
 
-export interface PasswordPut {
+export interface AccountPatch {
   old_password: string;
-  password: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  password?: string;
 }
 
 export interface Session {

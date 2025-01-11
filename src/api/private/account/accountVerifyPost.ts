@@ -1,15 +1,15 @@
-import {Route} from "../../../../types/routes";
-import {withErrorHandler} from "../../../../middlewares/withErrorHandler";
-import {withAuth} from "../../../../middlewares/withAuth";
-import {db} from "../../../../db";
+import {Route} from "../../../types/routes";
+import {withErrorHandler} from "../../../middlewares/withErrorHandler";
+import {withAuth} from "../../../middlewares/withAuth";
+import {sendVerifyEmail} from "../../../modules/mail";
+import {db} from "../../../db";
+import {generateVerificationLink} from "../../../modules/generateVerificationLink";
+import {ok} from "../../../utils/responses";
+import {InternalError} from "../../../errors/InternalError";
 import dayjs from "dayjs";
-import {sendVerifyEmail} from "../../../../modules/mail";
-import {generateVerificationLink} from "../../../../modules/generateVerificationLink";
-import {ok} from "../../../../utils/responses";
-import {InternalError} from "../../../../errors/InternalError";
-import {BadRequestError} from "../../../../errors/BadRequestError";
+import {BadRequestError} from "../../../errors/BadRequestError";
 
-export const authVerifyPost: Route = (f) =>
+export const accountVerifyPost: Route = (f) =>
     f.post('/verify', withErrorHandler(withAuth(async (_, resp, user) => {
         const codes = await db.codes.findMany({
             where: {
