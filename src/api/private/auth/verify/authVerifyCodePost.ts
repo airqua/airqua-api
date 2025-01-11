@@ -1,9 +1,9 @@
-import {Route} from "../../../types/routes";
-import {withErrorHandler} from "../../../middlewares/withErrorHandler";
-import {NotFoundError} from "../../../errors/NotFoundError";
-import {getAndValidateCode} from "../../../modules/getAndValidateCode";
-import {db} from "../../../db";
-import {ok} from "../../../utils/responses";
+import {Route} from "../../../../types/routes";
+import {withErrorHandler} from "../../../../middlewares/withErrorHandler";
+import {NotFoundError} from "../../../../errors/NotFoundError";
+import {getAndValidateCode} from "../../../../modules/getAndValidateCode";
+import {db} from "../../../../db";
+import {ok} from "../../../../utils/responses";
 
 type RouteType = { Params: { code: string } };
 

@@ -1,11 +1,11 @@
-import {Route} from "../../../types/routes";
-import {withErrorHandler} from "../../../middlewares/withErrorHandler";
-import {RecoverPost} from "../../../types/domain/private";
-import {db} from "../../../db";
-import {ok} from "../../../utils/responses";
-import {sendRecoverEmail} from "../../../modules/mail";
-import {generateRecoveryLink} from "../../../modules/generateRecoveryLink";
-import {InternalError} from "../../../errors/InternalError";
+import {Route} from "../../../../types/routes";
+import {withErrorHandler} from "../../../../middlewares/withErrorHandler";
+import {RecoverPost} from "../../../../types/domain/private";
+import {db} from "../../../../db";
+import {ok} from "../../../../utils/responses";
+import {sendRecoverEmail} from "../../../../modules/mail";
+import {generateRecoveryLink} from "../../../../modules/generateRecoveryLink";
+import {InternalError} from "../../../../errors/InternalError";
 
 type RouteType = { Body: RecoverPost };
 

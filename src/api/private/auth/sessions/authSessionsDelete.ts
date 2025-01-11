@@ -1,8 +1,8 @@
-import {Route} from "../../../types/routes";
-import {withErrorHandler} from "../../../middlewares/withErrorHandler";
-import {withAuth} from "../../../middlewares/withAuth";
-import {db} from "../../../db";
-import {ok} from "../../../utils/responses";
+import {Route} from "../../../../types/routes";
+import {withErrorHandler} from "../../../../middlewares/withErrorHandler";
+import {withAuth} from "../../../../middlewares/withAuth";
+import {db} from "../../../../db";
+import {ok} from "../../../../utils/responses";
 
 export const authSessionsDelete: Route = (f) =>
     f.delete('/sessions', withErrorHandler(withAuth(async (req, resp, user, session) => {

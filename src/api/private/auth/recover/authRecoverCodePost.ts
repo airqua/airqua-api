@@ -1,11 +1,11 @@
-import {Route} from "../../../types/routes";
-import {withErrorHandler} from "../../../middlewares/withErrorHandler";
-import {RecoverCodePost} from "../../../types/domain/private";
-import {db} from "../../../db";
-import {NotFoundError} from "../../../errors/NotFoundError";
+import {Route} from "../../../../types/routes";
+import {withErrorHandler} from "../../../../middlewares/withErrorHandler";
+import {RecoverCodePost} from "../../../../types/domain/private";
+import {db} from "../../../../db";
+import {NotFoundError} from "../../../../errors/NotFoundError";
 import bcrypt from 'bcrypt';
-import {ok} from "../../../utils/responses";
-import {getAndValidateCode} from "../../../modules/getAndValidateCode";
+import {ok} from "../../../../utils/responses";
+import {getAndValidateCode} from "../../../../modules/getAndValidateCode";
 
 type RouteType = { Params: { code: string }, Body: RecoverCodePost };
 

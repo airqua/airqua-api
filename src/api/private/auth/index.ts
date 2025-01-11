@@ -3,14 +3,15 @@ import {authGet} from "./authGet";
 import {authDelete} from "./authDelete";
 import {authLoginPost} from "./authLoginPost";
 import {authSignupPost} from "./authSignupPost";
-import {authRecoverPost} from "./authRecoverPost";
-import {authRecoverCodePost} from "./authRecoverCodePost";
-import {authVerifyCodePost} from "./authVerifyCodePost";
 import {authPasswordPut} from "./authPasswordPut";
-import {authSessionsGet} from "./authSessionsGet";
-import {authSessionsDelete} from "./authSessionsDelete";
-import {authTokenGet} from "./authTokenGet";
-import {authTokenPut} from "./authTokenPut";
+import {authRecoverPost} from "./recover/authRecoverPost";
+import {authRecoverCodePost} from "./recover/authRecoverCodePost";
+import {authVerifyCodePost} from "./verify/authVerifyCodePost";
+import {authSessionsGet} from "./sessions/authSessionsGet";
+import {authSessionsDelete} from "./sessions/authSessionsDelete";
+import {authTokenGet} from "./token/authTokenGet";
+import {authTokenPut} from "./token/authTokenPut";
+import {authVerifyPost} from "./verify/authVerifyPost";
 
 export const privateAuthHandler = makeRoutes((fastify) => {
     // GET /auth
@@ -30,6 +31,9 @@ export const privateAuthHandler = makeRoutes((fastify) => {
 
     // POST /auth/recover/{code}
     authRecoverCodePost(fastify);
+
+    // POST /auth/verify
+    authVerifyPost(fastify);
 
     // POST /auth/verify/{code}
     authVerifyCodePost(fastify);
