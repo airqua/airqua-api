@@ -134,6 +134,15 @@ export interface SensorPost {
   address: Address;
 }
 
+export interface SensorPatch {
+  coordinates?: Coordinates;
+  address?: Address;
+}
+
+export interface SensorVisiblePut {
+  visible: boolean;
+}
+
 export interface SensorReading {
   /** @format uuid */
   id: string;
