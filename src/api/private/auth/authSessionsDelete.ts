@@ -10,7 +10,7 @@ export const authSessionsDelete: Route = (f) =>
             where: {
                 AND: [
                     { user_id: user.id },
-                    { NOT: { id: session.id } }
+                    { NOT: { id: session } }
                 ]
             }
         });
