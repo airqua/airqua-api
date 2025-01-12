@@ -8,12 +8,18 @@ import {sendAlreadyRegisteredEmail, sendVerifyEmail} from "../../../modules/mail
 import {generateVerificationLink} from "../../../modules/generateVerificationLink";
 import {makeUuid} from "../../../utils/uuid";
 import {randomString} from "../../../utils/randomString";
+import {verifyRecaptcha} from "../../../modules/verifyRecaptcha";
+import {BadRequestError} from "../../../errors/BadRequestError";
 
 type RouteType = { Body: SignupPost };
 
 export const authSignupPost: Route = (f) =>
     f.post<RouteType>('/signup', withErrorHandler(async (req, resp) => {
-        const { first_name, last_name, email, password } = req.body;
+        const { first_name, last_name, email, password, recaptcha } = req.body;
+
+        if(!await verifyRecaptcha(recaptcha))  {
+            throw new BadRequestError();
+        }
 
         const existingUser = await db.users.findFirst({ where: { email } });
         if(existingUser) {

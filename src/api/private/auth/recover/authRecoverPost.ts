@@ -6,12 +6,18 @@ import {ok} from "../../../../utils/responses";
 import {sendRecoverEmail} from "../../../../modules/mail";
 import {generateRecoveryLink} from "../../../../modules/generateRecoveryLink";
 import {InternalError} from "../../../../errors/InternalError";
+import {verifyRecaptcha} from "../../../../modules/verifyRecaptcha";
+import {BadRequestError} from "../../../../errors/BadRequestError";
 
 type RouteType = { Body: RecoverPost };
 
 export const authRecoverPost: Route = (f) =>
     f.post<RouteType>('/recover', withErrorHandler(async (req, resp) => {
-        const { email } = req.body;
+        const { email, recaptcha } = req.body;
+
+        if(!await verifyRecaptcha(recaptcha))  {
+            throw new BadRequestError();
+        }
 
         const user = await db.users.findFirst({ where: { email } });
         if(!user) {

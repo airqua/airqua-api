@@ -61,11 +61,13 @@ export interface SignupPost {
   /** @format email */
   email: string;
   password: string;
+  recaptcha: string;
 }
 
 export interface RecoverPost {
   /** @format email */
   email: string;
+  recaptcha: string;
 }
 
 export interface RecoverCodePost {
