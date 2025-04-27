@@ -6,6 +6,8 @@ import {sensorsSensorIdReadingsGet} from "./readings/sensorsSensorIdReadingsGet"
 import {sensorsSensorIdDelete} from "./sensorsSensorIdDelete";
 import {sensorsSensorIdPatch} from "./sensorsSensorIdPatch";
 import {sensorsSensorIdVisiblePut} from "./sensorsSensorIdVisiblePut";
+import {sensorsUnapprovedGet} from "./sensorsUnapprovedGet";
+import {sensorsSensorIdApprovePut} from "./sensorsSensorIdApprovePut";
 
 export const privateSensorsHandler = makeRoutes((fastify) => {
     // GET /sensors
@@ -17,6 +19,9 @@ export const privateSensorsHandler = makeRoutes((fastify) => {
     // GET /sensors/own
     sensorsOwnGet(fastify);
 
+    // GET /sensors/unapproved
+    sensorsUnapprovedGet(fastify);
+
     // PATCH /sensors/{sensorId}
     sensorsSensorIdPatch(fastify);
 
@@ -25,6 +30,9 @@ export const privateSensorsHandler = makeRoutes((fastify) => {
 
     // PUT /sensors/{sensorId}/visible
     sensorsSensorIdVisiblePut(fastify);
+
+    // PUT /sensors/{sensorId}/approve
+    sensorsSensorIdApprovePut(fastify);
 
     // GET /sensors/{sensorId}/readings
     sensorsSensorIdReadingsGet(fastify);

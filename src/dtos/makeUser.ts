@@ -9,5 +9,6 @@ export const makeUser = (user: users): User => ({
     last_name: user.last_name,
     email: user.email,
     created_at: dayjs.utc(user.created_at).toISOString(),
-    verified: user.verified
+    verified: user.verified,
+    admin: user.admin
 })

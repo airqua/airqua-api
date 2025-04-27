@@ -47,6 +47,7 @@ export interface User {
   /** @format date-time */
   created_at: string;
   verified: boolean;
+  admin: boolean;
 }
 
 export interface LoginPost {
@@ -143,6 +144,10 @@ export interface SensorPatch {
 
 export interface SensorVisiblePut {
   visible: boolean;
+}
+
+export interface SensorApprovePut {
+  approved: boolean;
 }
 
 export interface SensorReading {
