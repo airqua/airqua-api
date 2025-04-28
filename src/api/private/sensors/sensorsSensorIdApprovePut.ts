@@ -10,7 +10,7 @@ import {ok} from "../../../utils/responses";
 type RouteType = { Params: { sensorId: string }, Body: SensorApprovePut };
 
 export const sensorsSensorIdApprovePut: Route = (f) =>
-    f.put<RouteType>('/:sensorId/visible', withErrorHandler(withAuth(async (req, resp, user) => {
+    f.put<RouteType>('/:sensorId/approve', withErrorHandler(withAuth(async (req, resp, user) => {
         if(!user.admin) throw new ForbidError();
 
         const { sensorId } = req.params;
